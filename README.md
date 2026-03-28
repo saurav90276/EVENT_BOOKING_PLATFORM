@@ -1,6 +1,9 @@
 # EVENT_BOOKING_PLATFORM
 The simplest, most dynamic way to manage, discover, and host world-class events in your local city with Saurav
 
+## 🌐 Live Demo
+https://event-booking-platform-liart.vercel.app
+
 # Features
 
 1. User Authentication: Secure login & registration with JWT and bcrypt.
