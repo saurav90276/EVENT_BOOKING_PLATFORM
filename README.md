@@ -20,4 +20,4 @@ https://event-booking-platform-liart.vercel.app
 12. Seat availability accurately updates and securely validates against overbooking logic.
 13. Admin Analytics Dashboard: Track live data such as Pending Requests, Total Revenue, and Total Confirmed Paid Clients directly from the admin panel.
 14. Email Notifications: Automated email delivery upon successful booking confirmation using Nodemailer.
-15. Sleek UI/UX: Built entirely with React, Tailwind CSS, and polished with micro-interactions.
+15. Sleek UI/UX: Built entirely with React and Tailwind CSS
