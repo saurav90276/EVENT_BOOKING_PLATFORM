@@ -11,9 +11,13 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "https://event-booking-platform-liart.vercel.app/",
+  origin: [
+    "http://localhost:5173",
+    "https://event-booking-platform-liart.vercel.app"
+  ],
   credentials: true
 }));
+
 app.use(express.json());
 
 // Routes
