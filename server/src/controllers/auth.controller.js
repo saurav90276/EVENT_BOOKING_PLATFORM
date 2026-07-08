@@ -29,12 +29,31 @@ exports.register = async (req, res) => {
 
         const otp = generateOTP();
         await OTP.create({ email, otp, action: 'account_verification' });
-        await sendOTPEmail(email, otp, 'account_verification');
+        
 
-        res.status(201).json({
-            message: 'OTP sent to email. Please verify.',
-            email: user.email
-        });
+        try {
+            await sendOTPEmail(email, otp, "account_verification");
+
+            return res.status(201).json({
+                success: true,
+                message: "OTP sent to email. Please verify.",
+                email: user.email,
+            });
+        } catch (err) {
+            console.error("Email Error:", err);
+
+            // Rollback if email sending fails
+            await User.deleteOne({ email });
+            await OTP.deleteOne({
+                email,
+                action: "account_verification",
+            });
+
+            return res.status(500).json({
+                success: false,
+                message: "Failed to send OTP email.",
+            });
+        }
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }

@@ -4,27 +4,19 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp-relay.brevo.com",
   port: 587,
   secure: false,
-  requireTLS: true,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
-});
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log("SMTP ERROR:", error);
-  } else {
-    console.log("SMTP READY");
-  }
 });
 
 const sendBookingEmail = async (userEmail, userName, eventTitle) => {
     try {
         const mailOptions = {
-            from: process.env.EMAIL_USER,
+            from: `"Eventora" <${process.env.SENDER_EMAIL}>`,
             to: userEmail,
             subject: `Booking Confirmed: ${eventTitle}`,
             html: `
@@ -48,7 +40,7 @@ const sendOTPEmail = async (userEmail, otp, type) => {
             : 'Please use the following OTP to verify and confirm your event booking.';
 
         const mailOptions = {
-            from: process.env.EMAIL_USER,
+            from: `"Eventora" <${process.env.SENDER_EMAIL}>`,
             to: userEmail,
             subject: title,
             html: `
@@ -66,6 +58,7 @@ const sendOTPEmail = async (userEmail, otp, type) => {
         console.log(`OTP sent to ${userEmail} for ${type}`);
     } catch (error) {
         console.error('Error sending OTP email:', error);
+        throw error;
     }
 };
 
