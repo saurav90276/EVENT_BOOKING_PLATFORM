@@ -3,6 +3,11 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+console.log("SMTP HOST:", process.env.SMTP_HOST);
+console.log("SMTP PORT:", process.env.SMTP_PORT);
+console.log("SMTP USER:", process.env.SMTP_USER);
+console.log("SENDER:", process.env.SENDER_EMAIL);
+
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
