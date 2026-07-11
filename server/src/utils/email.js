@@ -3,15 +3,12 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-console.log("SMTP HOST:", process.env.SMTP_HOST);
-console.log("SMTP PORT:", process.env.SMTP_PORT);
-console.log("SMTP USER:", process.env.SMTP_USER);
-console.log("SENDER:", process.env.SENDER_EMAIL);
 
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
   secure: false,
+  requireTLS: true,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -38,6 +35,12 @@ const sendBookingEmail = async (userEmail, userName, eventTitle) => {
 };
 
 const sendOTPEmail = async (userEmail, otp, type) => {
+
+    console.log("========== sendOTPEmail ==========");
+    console.log("To:", userEmail);
+    console.log("OTP:", otp);
+    console.log("Type:", type);
+
     try {
         const title = type === 'account_verification' ? 'Verify your Eventora Account' : 'Eventora Booking Verification';
         const msg = type === 'account_verification'
@@ -59,7 +62,10 @@ const sendOTPEmail = async (userEmail, otp, type) => {
                 </div>
             `
         };
-        await transporter.sendMail(mailOptions);
+        const info = await transporter.sendMail(mailOptions);
+        console.log("Mail Info:", info);
+
+
         console.log(`OTP sent to ${userEmail} for ${type}`);
     } catch (error) {
         console.error('Error sending OTP email:', error);

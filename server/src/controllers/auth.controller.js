@@ -24,12 +24,11 @@ exports.register = async (req, res) => {
             email,
             password: hashedPassword,
             role: 'user', // Hardcoded to prevent frontend passing role
-            isVerified: false
+            isVerified: true
         });
 
         const otp = generateOTP();
         await OTP.create({ email, otp, action: 'account_verification' });
-        
 
         try {
             await sendOTPEmail(email, otp, "account_verification");

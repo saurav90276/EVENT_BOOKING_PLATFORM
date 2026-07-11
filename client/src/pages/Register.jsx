@@ -76,6 +76,7 @@ const Register = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
+
                     </>
                 ) : (
                     <div>
@@ -93,6 +94,8 @@ const Register = () => {
                             maxLength="6"
                         />
                     </div>
+
+
                 )}
 
                 <button
@@ -102,6 +105,8 @@ const Register = () => {
                 >
                     {loading ? 'Processing...' : (showOTP ? 'Verify & Complete' : 'Sign Up')}
                 </button>
+                {loading ?<div className='text-center mt-6 text-gray-600 mx-10 my-10'><strong>Your account has been created successfully.</strong> Email OTP verification is temporarily disabled in this demo because a verified custom email domain is not yet configured. You can log in using your registered credentials.</div> : ""}
+
             </form>
 
             {!showOTP && (
@@ -109,6 +114,7 @@ const Register = () => {
                     Already have an account? <Link to="/login" className="text-gray-900 font-bold hover:underline">Sign in</Link>
                 </p>
             )}
+
         </div>
     );
 };
